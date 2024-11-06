@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -19,14 +20,11 @@ public class Main {
         // 삽입 정렬(Selection Sort)
         for(int i=1;i<N;i++){
             int select = A[i];
-            for(int j=0;j<i;j++){
-                if(select<=A[j]){
-                    for(int k=i-1;k>=j;k--)
-                        A[k+1] = A[k];
-                    A[j] = select;
-                    break;
-                }
-            }
+            // 이진탐색
+            int idx = BinarySearch(A, 0, i-1, select);
+            for(int j=i-1;j>=idx;j--)
+                A[j+1] = A[j];
+            A[idx] = select;
         }
 
         // 누적합
@@ -44,5 +42,18 @@ public class Main {
 
         // 출력
         System.out.print(time);
+    }
+
+    // 이진탐색
+    private static int BinarySearch(int[] A, int left, int right, int select) {
+        int mid=0;
+        while(left<=right){
+            mid = (left+right)/2;
+            if(A[mid]<=select)
+                left = mid+1;
+            else if(A[mid]>select)
+                right = mid-1;
+        }
+        return left;
     }
 }

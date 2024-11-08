@@ -10,16 +10,16 @@ public class Main {
         Arrays.setAll(A, i -> i); //1~m까지 숫자 채우기
 
         // 에라토스테네스 원리
-        for(int i=1;i<M;i++) {
-            if(A[i]==1) {
+        for(int i=1;i<=Math.sqrt(M);i++) {
+            if(A[i]==1) { //1은 제외
                 A[i] = 0; // 배열에서 지우는걸 0으로 대체
                 continue;
-            }else if(A[i]==0){
+            }else if(A[i]==0){ //이미 제거된건 제외
                 continue;
             }else{
                 for(int j=2;;j++){
                     if(i*j<=M){
-                        A[i*j] = 0;
+                        A[i*j] = 0; //본인을 제외하고 배수들을 제거
                     }else{
                         break;
                     }

@@ -6,9 +6,10 @@ import java.util.StringTokenizer;
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st;
 
-        int N = Integer.parseInt(st.nextToken());
+        // 첫번째 배열 입력 받기 & 정렬
+        int N = Integer.parseInt(br.readLine());
         int[] A = new int[N];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
@@ -16,32 +17,34 @@ public class Main {
         }
         Arrays.sort(A);
 
+        int left;
+        int right;
+        int mid;
+
+        // 찾기
         int M = Integer.parseInt(br.readLine());
-        int[] B = new int[M];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
-            B[i] = Integer.parseInt(st.nextToken());
-        }
-
-        for(int i = 0;i < M;i++) {
-            boolean flag = false;
-            int left = 0, right = N - 1;
-            while (left <= right) {
-                int mid = (left + right) / 2;
-                if(B[i] == A[mid]) {
-                    flag = true;
-                    break;
-                }else if(B[i]<A[mid]){
-                    right = mid-1;
-                }else if((B[i]>A[mid])){
+            boolean exist = false;
+            left = 0;
+            right = N-1;
+            // 각각을 검사할거임
+            int x = Integer.parseInt(st.nextToken());
+            for(int j=0;left<=right;j++){
+                mid = (left+right)/2;
+                if(x>A[mid]){
                     left = mid+1;
+                }else if(x<A[mid]){
+                    right = mid-1;
+                }else if(x==A[mid]){
+                    exist = true;
+                    break;
                 }
             }
-            if(flag){
+            if(exist)
                 System.out.println("1");
-            }else {
+            else
                 System.out.println("0");
-            }
         }
     }
 }

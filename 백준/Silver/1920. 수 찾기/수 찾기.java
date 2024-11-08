@@ -36,7 +36,7 @@ public class Main {
                     left = mid+1;
                 }else if(x<A[mid]){
                     right = mid-1;
-                }else if(x==A[mid]){
+                }else{
                     exist = true;
                     break;
                 }

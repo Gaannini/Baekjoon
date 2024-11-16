@@ -1,55 +1,35 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class Main {
-    static long[] A;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
         int N = Integer.parseInt(br.readLine());
-        A = new long[N];
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++)
-            A[i] = Long.parseLong(st.nextToken());
-        Arrays.sort(A);
+        HashMap<Long, Integer> map = new HashMap<>();
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i < N; i++) {
+            long key = Long.parseLong(st.nextToken());
+            if(map.containsKey(key)) {
+                map.put(key, map.get(key) + 1);
+            }else{
+                map.put(key, 1);
+            }
+        }
 
         int M = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
-
-        StringBuilder sb = new StringBuilder();
-        for(int i=0;i<M;i++){
-            long x = Long.parseLong(st.nextToken());
-            //해당 값 시작&끝(초과되는 첫번째) 인덱스 찾기
-            int start = startIdx(x);
-            int end = endIdx(x);
-
-            sb.append(end-start).append(" ");
+        for(int i = 0; i < M; i++) {
+            long key = Long.parseLong(st.nextToken());
+            //찾는 키가 존재한다면 찾는 키의 값을 반환하고 없다면 기본 값을 반환
+            sb.append(map.getOrDefault(key, 0)).append(" ");
         }
         System.out.println(sb);
-    }
-
-    private static int startIdx(long x) {
-        int left = 0, right = A.length;
-        while(left<right){
-            int mid = (left+right)/2;
-            if(A[mid]<x){
-                left = mid+1;
-            }else right = mid;
-        }
-        return left;
-    }
-
-    private static int endIdx(long x) {
-        int left = 0, right = A.length;
-        while(left<right){
-            int mid = (left+right)/2;
-            if(A[mid]>x) right = mid;
-            else left = mid+1;
-        }
-        return left;
     }
 }
